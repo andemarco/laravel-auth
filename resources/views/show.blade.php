@@ -1,9 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-  @foreach ($posts as $post)
     <div class="">
-      <h2><a href="{{route('show', $post->id)}}">{{$post['title']}} di {{$post->user->name}}</a></h2>
+      <h2>{{$post['title']}} di {{$post->user->name}}</h2>
       <p>Corpo: {{$post['body']}}</p>
       <img src="{{$post['photo_path']}}" alt="">
       <h6>Commenti:</h6>
@@ -20,6 +19,4 @@
         @method('POST')
       </form>
     </div>
-
-  @endforeach
 @endsection

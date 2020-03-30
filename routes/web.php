@@ -27,5 +27,9 @@ Route::name('admin.')
     ->middleware('auth')
     ->group(function() {
     Route::resource('posts','PostController');
-    //rotta commenti admin
+
 });
+    //rotta commenti
+Route::post('comment/{id}', 'CommentController@comment')->name('comment');
+//rotta show guest
+Route::get('/show{id}', 'HomeController@show')->name('show');
