@@ -13,10 +13,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
+// ROTTA VERSO HOME CON POST VISIBILI
+Route::get('/', 'HomeController@index')->name('home');
+//ROTTA VERSO LA PAGINE DEL SINGOLO ADMIN
+Route::name('admin.')
+    ->prefix('admin')
+    ->namespace('Admin')
+    ->middleware('auth')
+    ->group(function() {
+    Route::resource('posts','PostController');
+    //rotta commenti admin
+});
