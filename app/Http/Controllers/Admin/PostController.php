@@ -29,7 +29,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view ('admin.create');
     }
 
     /**
@@ -40,7 +40,20 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $idUser = Auth::user()->id;
+        $nameUser = Auth::user()->name;
+
+        $data = $request->all();
+
+        $newPost = new Post;
+        $newPost->title = $data['title'];
+        $newPost->body = $data['body'];
+        $newPost->photo_path = $data['photo_path'];
+        $newPost->user_id = $idUser;
+
+        $newPost->save();
+
+        return redirect()->route('admin.posts.index');
     }
 
     /**
@@ -51,7 +64,9 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        //
+      $post = Post::find($id);
+
+      return view('admin.show', compact('post'));
     }
 
     /**
@@ -62,7 +77,8 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
+      $post = Post::find($id);
+      return view('admin.edit', compact('post'));
     }
 
     /**
@@ -72,9 +88,20 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Post $post)
     {
-        //
+      $data = $request->all();
+      $idUser = Auth::user()->id;
+      $nameUser = Auth::user()->name;
+
+      $post->title = $data['title'];
+      $post->body = $data['body'];
+      $post->photo_path = $data['photo_path'];
+      $post->user_id = $idUser;
+
+      $post->update();
+
+      return redirect()->route('admin.posts.index');
     }
 
     /**
@@ -83,8 +110,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Post $post)
     {
-        //
+      $post->delete();
+      return redirect()->route("admin.posts.index");
     }
 }
