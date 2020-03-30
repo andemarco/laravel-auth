@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-  <a href="{{route('admin.posts.create')}}">CREA NUOVO POST</a>
+  <h1>I TUOI POST</h1>
   @foreach ($posts as $post)
 
     <ul>

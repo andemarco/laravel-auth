@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+<h1>CREA IL TUO NUOVO POST</h1>
 <div class="form">
   <form class="" action="{{route('admin.posts.store')}}" method="post">
     <label for="title">Inserisci Titolo</label>

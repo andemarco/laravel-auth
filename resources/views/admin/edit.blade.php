@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+  <h1>MODIFICA IL POST "{{$post['title']}}"</h1>
 <div class="form">
   <form class="" action="{{route('admin.posts.update', $post)}}" method="post">
     <label for="title">Inserisci Titolo</label>
