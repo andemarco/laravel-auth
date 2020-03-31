@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Post;
+use App\Tag;
 use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
@@ -29,7 +30,13 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view ('admin.create');
+      $tags = Tag::all();
+
+      $data = [
+        'tags'=>$tags,
+      ];
+
+      return view ('admin.create', $data);
     }
 
     /**
@@ -52,6 +59,9 @@ class PostController extends Controller
         $newPost->user_id = $idUser;
 
         $newPost->save();
+
+        $tags = $data['tags'];
+        $newPost->tags()->attach($tags);
 
         return redirect()->route('admin.posts.index');
     }
@@ -78,7 +88,14 @@ class PostController extends Controller
     public function edit($id)
     {
       $post = Post::find($id);
-      return view('admin.edit', compact('post'));
+      $tags = Tag::all();
+
+      $data = [
+        'post'=>$post,
+        'tags'=>$tags,
+      ];
+
+      return view('admin.edit', $data);
     }
 
     /**
@@ -90,9 +107,10 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-      $data = $request->all();
       $idUser = Auth::user()->id;
       $nameUser = Auth::user()->name;
+
+      $data = $request->all();
 
       $post->title = $data['title'];
       $post->body = $data['body'];
@@ -100,6 +118,12 @@ class PostController extends Controller
       $post->user_id = $idUser;
 
       $post->update();
+
+
+
+      $tags = $data['tags'];
+      $post->tags()->sync($tags);
+
 
       return redirect()->route('admin.posts.index');
     }
@@ -112,6 +136,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+      $post->tags()->detach();
       $post->delete();
       return redirect()->route("admin.posts.index");
     }
