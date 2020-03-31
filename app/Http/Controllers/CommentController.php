@@ -19,6 +19,6 @@ class CommentController extends Controller
 
       $newComment->save();
 
-      return redirect()->route('home');
+      return view('show', compact('post'));
     }
 }

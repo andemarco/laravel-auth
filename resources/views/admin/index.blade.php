@@ -12,7 +12,7 @@
           <li><p>Corpo: {{$post['body']}}</p></li>
           <li><p>Path immagine: {{$post['photo_path']}}</p></li>
           <li><a href="{{route('admin.posts.edit', $post->id)}}">Modifica</a></li>
-          <li><a href="{{route('admin.posts.show', $post->id)}}">Guarda</a></li>
+          <li><a href="{{route('admin.posts.show', $post->id)}}">Anteprima</a></li>
           <li><form class="" action="{{route('admin.posts.destroy', $post)}}" method="post">
               <button type="submit" name="button">Cancella</button>
               @csrf

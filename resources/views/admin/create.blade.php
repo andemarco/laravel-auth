@@ -13,6 +13,18 @@
     <button type="submit" name="button">Inserisci</button>
     @csrf
     @method('POST')
+    <div class="">
+      <h5>Inserisci TAG</h5>
+      <label for="tags">Tags</label>
+      @foreach ($tags as $tag)
+      <div>
+        <span>{{$tag->tag}}</span>
+        <input type="checkbox" name="tags[]" value="{{$tag->id}}">
+      </div>
+      @endforeach
+    </div>
+
+    <button type="submit" name="button">Salva</button>
   </form>
 </div>
 @endsection
