@@ -58,10 +58,16 @@ class PostController extends Controller
         $newPost->photo_path = $data['photo_path'];
         $newPost->user_id = $idUser;
 
-        $newPost->save();
+        $saved = $newPost->save();
+
+        if(!$saved) {
+            return redirect()->back();
+        }
 
         $tags = $data['tags'];
-        $newPost->tags()->attach($tags);
+        if(!empty($tags)) {
+            $newPost->tags()->attach($tags);
+        }
 
         return redirect()->route('admin.posts.index');
     }
@@ -75,6 +81,11 @@ class PostController extends Controller
     public function show($id)
     {
       $post = Post::find($id);
+
+      if(empty($post))
+        {
+          abort(404);
+        }
 
       return view('admin.show', compact('post'));
     }
@@ -108,6 +119,15 @@ class PostController extends Controller
     public function update(Request $request, Post $post)
     {
       $idUser = Auth::user()->id;
+
+      if(empty($post)){
+          abort(404);
+      }
+
+      if($post->user->id != $idUser){
+          abort(404);
+      }
+
       $nameUser = Auth::user()->name;
 
       $data = $request->all();
@@ -136,6 +156,11 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+
+      if(empty($post)) {
+        abort(404);
+      }
+
       $post->tags()->detach();
       $post->delete();
       return redirect()->route("admin.posts.index");
