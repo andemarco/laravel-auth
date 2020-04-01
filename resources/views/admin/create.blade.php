@@ -2,7 +2,7 @@
 
 @section('content')
 <h1>CREA IL TUO NUOVO POST</h1>
-<div class="form">
+<div class="container-form">
   <form class="" action="{{route('admin.posts.store')}}" method="post">
     <label for="title">Inserisci Titolo</label>
     <input type="text" name="title" value="">
@@ -10,7 +10,6 @@
     <textarea type="text" name="body" value=""></textarea>
     <label for="img">Inserisci URL immagine</label>
     <input type="text" name="photo_path" value="">
-    <button type="submit" name="button">Inserisci</button>
     @csrf
     @method('POST')
     <div class="">

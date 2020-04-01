@@ -1,16 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="">
+    <div class="box">
       <h2>{{$post['title']}} di {{$post->user->name}}</h2>
       <p>Corpo: {{$post['body']}}</p>
       <img src="{{$post['photo_path']}}" alt="">
       <h6>Tags: @foreach ($post->tags as $tag)<p>{{$tag->tag}}</p> </h6> @endforeach
       <h6>Commenti:</h6>
         @foreach ($post->comment as $comment)
-      <ul>
-        <li>{{$comment['text']}}<br>
-        Del giorno: {{$comment['created_at']}}</li>
+      <ul class="comment">
+        <li>{{$comment['text']}} - <small>{{$comment['created_at']}}</small></li>
       </ul>
         @endforeach
       <form class="" action="{{route('comment', $post->id)}}" method="post">
