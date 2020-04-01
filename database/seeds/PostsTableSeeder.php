@@ -17,7 +17,7 @@ class PostsTableSeeder extends Seeder
           $newPost = new Post;
           $newPost->title = $faker->sentence(4);
           $newPost->body = $faker->text(255);
-          $newPost->photo_path = 'https://picsum.photos/200/300';
+          $newPost->photo_path = 'https://picsum.photos/id/'.rand(1,100).'/640/480';
           $newPost->user_id = rand(1, 3);
 
           $newPost->save();
