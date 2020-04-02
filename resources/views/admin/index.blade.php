@@ -8,7 +8,7 @@
 
       <h2>TITOLO: {{$post['title']}}</h2>
       <p>Corpo: {{$post['body']}}</p>
-      <p>Path immagine: {{$post['photo_path']}}</p>
+      <p>Path immagine: {{(is_null($post->path_image) ? $post->photo_path : asset('storage/' . $post->path_image))}}</p>
       <p>Tags:<br> @foreach ($post->tags as $tag){{$tag->tag}}</p> @endforeach
       <a href="{{route('admin.posts.edit', $post->id)}}">Modifica</a><br>
       <a href="{{route('admin.posts.show', $post->id)}}">Anteprima</a>

@@ -10,6 +10,11 @@
     <textarea type="text" name="body" value="">{{$post['body']}}</textarea>
     <label for="img">Inserisci URL immagine</label>
     <input type="text" name="photo_path" value="{{$post['photo_path']}}">
+    <small>oppure</small>
+    <div class="">
+      <label>Carica la tua immagine</label>
+      <input type="file" name="path_image" value="{{$post->path_image}}" accept="image/">
+    </div>
     @csrf
     @method('PATCH')
     <div class="">

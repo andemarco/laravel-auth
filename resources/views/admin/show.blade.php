@@ -4,7 +4,7 @@
     <div class="box">
       <h2>{{$post['title']}} di {{$post->user->name}}</h2>
       <p>Corpo: {{$post['body']}}</p>
-      <img src="{{$post['photo_path']}}" alt="">
+      <img src="{{($post->path_image->isEmpty() ? $post->photo_path : asset('storage/' . $post->path_image))}}" alt="">
       <h6>Tags: @foreach ($post->tags as $tag)<p>{{$tag->tag}}</p> </h6> @endforeach
       <h6>Commenti:</h6>
         @foreach ($post->comment as $comment)

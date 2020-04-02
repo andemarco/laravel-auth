@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Post;
 use App\Tag;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
@@ -47,18 +48,31 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        // $request->validate([
+        //   'path_image'=> 'image'
+        // ]);
+
         $idUser = Auth::user()->id;
         $nameUser = Auth::user()->name;
-
         $data = $request->all();
 
+        if (!empty($data['tags'])) {
+          $tags = $data['tags'];
+        }
+        if (!empty($data['path_image'])) {
+          $path = Storage::disk('public')->put('images', $data['path_image']);
+        }
         $newPost = new Post;
         $newPost->title = $data['title'];
         $newPost->body = $data['body'];
         $newPost->photo_path = $data['photo_path'];
         $newPost->user_id = $idUser;
+        if (!empty($data['path_image'])) {
+          $newPost->path_image = $path;;
+        }
 
         $saved = $newPost->save();
+
 
         if(!$saved) {
             return redirect()->back();
@@ -131,7 +145,7 @@ class PostController extends Controller
       $nameUser = Auth::user()->name;
 
       $data = $request->all();
-
+      
       $post->title = $data['title'];
       $post->body = $data['body'];
       $post->photo_path = $data['photo_path'];
